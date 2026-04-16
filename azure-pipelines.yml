@@ -2,16 +2,23 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Default
 
 steps:
-- checkout: self
+- script: echo "Building project..."
+  displayName: 'Build Step'
 
-- script: ls -la
-  displayName: Debug files
+- script: echo "Deploying project..."
+  displayName: 'Deploy Step'
 
-- script: npm install
-  displayName: Install dependencies
+# Create a file to publish
+- script: |
+    mkdir -p $(Build.ArtifactStagingDirectory)
+    echo "Hi , Iam from future" > $(Build.ArtifactStagingDirectory)/output.txt
+  displayName: 'Create Artifact File'
 
-- script: node app.js
-  displayName: Run App
+# Publish artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'drop'
