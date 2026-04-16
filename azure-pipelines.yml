@@ -8,7 +8,7 @@ trigger:
       - develop     # also runs on develop branch
 
 pool:
-  vmImage: 'ubuntu-latest'   # free Microsoft-hosted agent
+  name: Default   # free Microsoft-hosted agent
 
 steps:
 
